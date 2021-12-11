@@ -4,9 +4,9 @@ import RouteWithLayout from 'components/shared/RouteWithLayout'
 
 import Home from 'pages/Home'
 
-const AppRouter = () => (
+const AppRouter = ({connection}) => (
     <Switch>
-        <RouteWithLayout layout={Main} exact path="/" component={Home} />
+        <RouteWithLayout layout={Main} exact path="/" component={Home} connection={connection} />
     </Switch>
 )
 

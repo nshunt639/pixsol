@@ -27,10 +27,10 @@ const theme = createTheme({
             secondary: '#E9018C',
             grey: '#464646'
         },
-        // action: {
-        //     disabledBackground: '#222322',
-        //     disabled: '#686868'
-        // }
+        action: {
+            disabledBackground: '#E9018C33',
+            // disabled: '#686868'
+        }
     },
     shape: {},
     typography,

@@ -15,6 +15,9 @@ import useStyles from './Header.styles'
 
 import Logo from './Logo'
 
+import {useWallet} from '@solana/wallet-adapter-react'
+import {WalletDialogButton, WalletDisconnectButton} from '@solana/wallet-adapter-material-ui'
+
 const MENU_ITEMS = [
     ['Home', `${HOME_URL}/#`],
     ['Mint', `${HOME_URL}/#mint`],
@@ -25,6 +28,8 @@ const MENU_ITEMS = [
 ]
 
 const Header = () => {
+    const wallet = useWallet()
+
     const isScrolling = useScrollTrigger({
         disableHysteresis: true,
         threshold: 160
@@ -68,14 +73,20 @@ const Header = () => {
                                 </Box>
                             </Hidden>
                             <Box marginLeft={4} display="flex" alignItems="center">
-                                <IconButton href="https://twitter.com/Pixsolio" style={{padding: '8px'}}>
+                                <IconButton
+                                    href="https://twitter.com/Pixsolio"
+                                    style={{padding: '8px'}}
+                                >
                                     <img
                                         className="social-icon"
                                         src="/images/twitter.png"
                                         alt="PIXSOL Twitter"
                                     />
                                 </IconButton>
-                                <IconButton href="https://discord.gg/kha3Uz47DF" style={{padding: '8px'}}>
+                                <IconButton
+                                    href="https://discord.gg/kha3Uz47DF"
+                                    style={{padding: '8px'}}
+                                >
                                     <img
                                         className="social-icon"
                                         src="/images/discord.png"
@@ -83,13 +94,23 @@ const Header = () => {
                                     />
                                 </IconButton>
                                 <Box ml={2}>
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        className={classes.connectButton}
-                                    >
-                                        Connect
-                                    </Button>
+                                    {wallet.connected ? (
+                                        <WalletDisconnectButton
+                                            color="primary"
+                                            variant="contained"
+                                            className={classes.connectButton}
+                                        >
+                                            Disconnect
+                                        </WalletDisconnectButton>
+                                    ) : (
+                                        <WalletDialogButton
+                                            color="primary"
+                                            variant="contained"
+                                            className={classes.connectButton}
+                                        >
+                                            Connect
+                                        </WalletDialogButton>
+                                    )}
                                 </Box>
                             </Box>
                         </Box>

@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
         position: 'absolute',
         height: '2px',
         top: '3px',
-        background: theme.palette.background.secondary
+        background: '#E9018C'
     },
     percent: {
         position: 'absolute',
@@ -29,7 +29,18 @@ const useStyles = makeStyles(theme => ({
         width: theme.spacing(4),
         paddingTop: 2,
         marginLeft: -theme.spacing(2),
-        background: theme.palette.background.secondary,
+        background: '#E9018C',
+    },
+    mintButtonWrapper: {
+        position: 'relative',
+        textAlign: 'center'
+    },
+    buttonProgress: {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        marginTop: '-10px',
+        marginLeft: '-10px'
     },
     mintButton: {
         position: 'relative',

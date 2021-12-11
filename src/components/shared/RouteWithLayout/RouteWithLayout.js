@@ -1,16 +1,15 @@
-import React from 'react'
 import { Route } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 const RouteWithLayout = (props) => {
-  const { layout: Layout, title, component: Component, ...rest } = props
+  const { layout: Layout, title, component: Component, connection, ...rest } = props
 
   return (
     <Route
       {...rest}
       render={(matchProps) => (
         <Layout title={title}>
-          <Component {...matchProps} />
+          <Component {...matchProps} connection={connection} />
         </Layout>
       )}
     />

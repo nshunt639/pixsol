@@ -9,7 +9,7 @@ import Tokenomics from 'components/Tokenomics'
 import useStyles from './Home.styles'
 import Faq from 'components/Faq'
 
-const Home = () => {
+const Home = props => {
     const classes = useStyles()
 
     return (
@@ -18,7 +18,7 @@ const Home = () => {
                 <Banner />
             </Box>
             <Box id="mint">
-                <Mint />
+                <Mint {...props} />
             </Box>
             <Box id="roadmap">
                 <Roadmap />
