@@ -34,7 +34,7 @@ const Faq = () => {
                             {FAQ_ITEMS.map(([question, answer], i) => (
                                 <Grid item xs={12} md={4} key={`faq-item-${i}`}>
                                     <Box className={classes.item} textAlign="center">
-                                        <Box class={classes.itemInner}>
+                                        <Box className={classes.itemInner}>
                                             <Box className={classes.question}>
                                                 <Typography
                                                     variant="subtitle2"

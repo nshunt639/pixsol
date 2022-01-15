@@ -32,7 +32,7 @@ const Utilities = () => {
                         {UTILITY_ITEMS.map(([title, content], i) => (
                             <Grid item xs={12} md={4} key={`utility-item-${i}`}>
                                 <Box className={classes.item} textAlign="center">
-                                    <Box class={classes.itemInner}>
+                                    <Box className={classes.itemInner}>
                                         <Typography variant="subtitle1">{title}</Typography>
                                         <Typography variant="body1" color="textSecondary">
                                             {content}

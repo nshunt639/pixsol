@@ -86,7 +86,7 @@ const Tokenomics = () => {
                             <Grid item xs={12} md={5}>
                                 <Grid container spacing={3}>
                                     {TOKENOMICS_ITEMS[0].map((item, i) => (
-                                        <Grid item xs={12}>
+                                        <Grid item xs={12} key={`tokenmics-item-0-${i}`}>
                                             <Item
                                                 item={item}
                                                 classes={classes}
@@ -107,7 +107,7 @@ const Tokenomics = () => {
                             <Grid item xs={12} md={5}>
                                 <Grid container spacing={3}>
                                     {TOKENOMICS_ITEMS[1].map((item, i) => (
-                                        <Grid item xs={12}>
+                                        <Grid item xs={12} key={`tokenmics-item-1-${i}`}>
                                             <Item item={item} classes={classes} />
                                         </Grid>
                                     ))}
@@ -119,12 +119,12 @@ const Tokenomics = () => {
                         <Container maxWidth="sm">
                             <Grid container spacing={3}>
                                 {TOKENOMICS_ITEMS[0].map((item, i) => (
-                                    <Grid item xs={12}>
+                                    <Grid item xs={12} key={`tokenmics-item-0-${i}`}>
                                         <Item item={item} classes={classes} />
                                     </Grid>
                                 ))}
                                 {TOKENOMICS_ITEMS[1].map((item, i) => (
-                                    <Grid item xs={12}>
+                                    <Grid item xs={12} key={`tokenmics-item-1-${i}`}>
                                         <Item item={item} classes={classes} />
                                     </Grid>
                                 ))}

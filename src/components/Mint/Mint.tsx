@@ -9,16 +9,21 @@ import * as anchor from '@project-serum/anchor'
 
 import {useWallet} from '@solana/wallet-adapter-react'
 
+// import {
+//     CandyMachine,
+//     awaitTransactionSignatureConfirmation,
+//     getCandyMachineState,
+//     mintOneToken
+// } from '../../config/candy-machine'
+
 import {
-    CandyMachine,
     awaitTransactionSignatureConfirmation,
+    CandyMachineAccount,
     getCandyMachineState,
     mintOneToken
 } from '../../config/candy-machine'
 
 import {
-    TREASURY_ADDRESS,
-    CANDY_MACHINE_CONFIG,
     CANDY_MACHINE_ID,
     CANDY_START_DATE,
     TRANSACTION_TIMEOUT,
@@ -29,8 +34,6 @@ import {
     SUPPLY_LIMIT
 } from 'config/constants'
 
-const treasury = new anchor.web3.PublicKey(TREASURY_ADDRESS!)
-const config = new anchor.web3.PublicKey(CANDY_MACHINE_CONFIG!)
 const candyMachineId = new anchor.web3.PublicKey(CANDY_MACHINE_ID!)
 
 export interface ProgressProps {
@@ -69,7 +72,7 @@ const Mint = (props: MintProps) => {
     const [availableCount, setAvailableCount] = useState(0)
 
     const wallet = useWallet()
-    const [candyMachine, setCandyMachine] = useState<CandyMachine>()
+    const [candyMachine, setCandyMachine] = useState<CandyMachineAccount>()
 
     const isWhitelisted =
         wallet.publicKey && PRESALE_WHITELIST.includes(wallet.publicKey.toBase58())
@@ -102,20 +105,17 @@ const Mint = (props: MintProps) => {
     const mintOne = async () => {
         try {
             if (wallet.connected && candyMachine?.program && wallet.publicKey) {
-                const mintTxId = await mintOneToken(
-                    candyMachine,
-                    config,
-                    wallet.publicKey,
-                    treasury
-                )
+                const mintTxId = (await mintOneToken(candyMachine, wallet.publicKey))[0]
 
-                const status = await awaitTransactionSignatureConfirmation(
-                    mintTxId,
-                    TRANSACTION_TIMEOUT,
-                    props.connection,
-                    'singleGossip',
-                    false
-                )
+                let status: any = {err: true}
+                if (mintTxId) {
+                    status = await awaitTransactionSignatureConfirmation(
+                        mintTxId,
+                        TRANSACTION_TIMEOUT,
+                        props.connection,
+                        true
+                    )
+                }
 
                 if (!status?.err) {
                     showMessage('Congratulations! Mint succeeded!', 'success')
@@ -185,9 +185,10 @@ const Mint = (props: MintProps) => {
             signTransaction: wallet.signTransaction
         } as anchor.Wallet
 
-        const {candyMachine, goLiveDate, itemsRemaining, itemsRedeemed, itemsAvailable} =
-            await getCandyMachineState(anchorWallet, candyMachineId, props.connection)
+        const cndy = await getCandyMachineState(anchorWallet, candyMachineId, props.connection)
 
+        const { goLiveDate, itemsRemaining, itemsRedeemed, itemsAvailable } = cndy.state
+        
         setRedeemedCount(itemsRedeemed)
 
         const itemsAvailable2 =
@@ -202,8 +203,9 @@ const Mint = (props: MintProps) => {
 
         setIsSoldOut(itemsRemaining === 0 || (SUPPLY_LIMIT > 0 && itemsRedeemed >= SUPPLY_LIMIT))
 
-        setPresaleDate(goLiveDate)
-        setCandyMachine(candyMachine)
+        const date = new Date(goLiveDate.toNumber() * 1000)
+        setPresaleDate(date)
+        setCandyMachine(cndy)
     }
 
     useEffect(() => {
