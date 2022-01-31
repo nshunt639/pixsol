@@ -1,4 +1,4 @@
-# The Sullen
+# PIXSOL
 
 ## Available Scripts
 
